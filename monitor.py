@@ -140,10 +140,17 @@ def main() -> int:
     if is_first_run:
         # 第一次執行只建立基準名單，不要一次推播 56 筆舊案件
         print(f"[初始化] 已記錄 {len(cases)} 筆現有案件，之後只會通知新案件。")
+        send_discord(
+            webhook_url,
+            f"🟢 監控已啟動，記錄了 {len(cases)} 筆現有案件作為基準，之後有新案件會通知。",
+        )
         return 0
 
     if not new_cases:
         print("[執行完成] 沒有新案件。")
+        # 除錯用：就算沒有新案件，也發一則「心跳」訊息，方便確認排程有沒有在跑。
+        # 確認排程正常之後，把下面這行拿掉，改回只有新案件才通知。
+        send_discord(webhook_url, "⚪ 監控正常執行中，這次沒有新案件。")
         return 0
 
     print(f"[執行完成] 發現 {len(new_cases)} 筆新案件，開始推播。")
