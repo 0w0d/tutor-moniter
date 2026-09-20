@@ -70,6 +70,7 @@ def fetch_cases(url: str) -> list[dict]:
                 "date": date.strip(),
             }
         )
+    cases.appnd("和我簽訂契約 成為魔法少女吧")
     return cases
 
 
